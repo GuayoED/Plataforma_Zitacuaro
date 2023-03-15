@@ -1,0 +1,136 @@
+{% extends 'reciclaje/base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 class="my-4" style="text-align: center ;">
+        Lista dispocisión final
+    </h1>
+    
+    <div align ="center" class="btn_crear mb-3 " style="margin: 1rem;" >
+        <a href="{% url 'crearPuntosReciclaje' %}" title="Editar" type="button" class="btn btn-primary" style="background-color: #0f7173;border: #0f7173;"> <i class="bi bi-plus-circle-fill"></i>
+        Crear</a>
+    </div>
+
+    <form action=""  method="get">
+        {% csrf_token %}
+    <div class="input-group mb-3">
+        <input type="search" class="form-control" placeholder="Buscar..." name="buscar">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+        </div>
+      </div>
+    </form>
+    
+    <table class="table table-striped shadow">
+        <thead   style="background-color: #f72585;" >
+            <tr>
+                <th width="35%" style="color: white;">Nombre</th>
+                <th style="color: white;">Dirección</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for PuntosReciclaje in object_list %}
+            <tr>
+                <td>{{ PuntosReciclaje.nombre }}</td>
+                <td>{{ PuntosReciclaje.direccion }}</td>
+                <td>
+                    <form action="{% url 'eliminarPuntosReciclaje' PuntosReciclaje.nombre %}" method="post">
+                        {% csrf_token %}
+
+                            <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Acciones
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <a href="{% url 'detallePuntosReciclaje' PuntosReciclaje.nombre %}" title="Ver" type="button" class="btn dropdown-item">
+                                    <i class="bi bi-eye"></i> Ver
+                                </a>
+                                <a href="{% url 'editarPuntosReciclaje' PuntosReciclaje.nombre %}" title="Editar" type="button" class="btn dropdown-item">
+                                    <i class="bi bi-pencil"></i>Editar
+                                </a>
+                                <button class="dropdown-item" onclick="return eliminar();" type="submit">
+                                    <i class="bi bi-trash3"></i>         Eliminar  </button>
+                                
+                            </div>
+
+                    </form>
+                </td>
+            
+            </tr>
+            {% endfor %}
+            
+        </tbody>
+        
+    </table>
+
+    {% if is_paginated %}
+        
+    <ul class="pagination">
+
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a href="?page={{ page_obj.previous_page_number }}" class="page-link">Anterior</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a href="#" class="page-link">Anterior</a>
+        </li>
+        {% endif %}
+
+        {% for i in paginator.page_range %}
+
+        
+        <li class="page-item {% if page_obj.number == i %} active {% endif %}">
+            <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+        </li>
+        
+        {% endfor %}
+
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a href="?page={{ page_obj.next_page_number }}" class="page-link">Siguiente</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a href="#" class="page-link">Siguiente</a>
+        </li>
+        {% endif %}
+
+    </ul>
+    {% endif %}
+
+
+    <script type="text/javascript">
+        function eliminar() {
+          var x = confirm("Eliminar Punto de Reciclaje ?");
+          if (x)
+            return true;
+          else
+            return false;
+        }
+      </script>
+
+{% if messages %}
+<ul class="messages list-group mb-3">
+  {% for message in messages %}
+  <li {% if message.tags %} class="{{ message.tags }} list-group-item"  {%endif%} style="background-color: #8789c0; color: white;">{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+    {% bootstrap_javascript jquery='full' %}     
+</body>
+</html>
+{% endblock content %}

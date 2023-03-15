@@ -1,0 +1,41 @@
+{% extends 'reciclaje/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="d-flex container-xl" style="justify-content: center;">
+    <div class="card text-bg-light mb-4" style="max-width: 25rem; margin-top: 20px;">
+      <div class="m-3" style="text-align: center;">
+
+          <a class="dropdown-item text-end" href="{% url 'perfil' %}"><i class="bi bi-pencil-square"></i></a>
+  
+          <img src="{% static 'reciclaje/img/'%}{{request.user.pic}}" alt="Fotot de perfil" class="rounded-circle p-0" style="width: 150px; height: 150px;">
+  
+          <h1>{{request.user.first_name}} {{request.user.last_name}}</h1>
+
+          <h5><b>CURP</b></h5>
+  
+          <h5 style="color: #6F6F6F;">{{request.user.CURP}}</h5>
+  
+          <span class="badge" style="background-color: #E01883;"><h1 style="color: white;">{{request.user.puntos}} pts</h1></span>
+  
+          <h5><b>Fecha de nacimiento</b></h5>
+  
+          <h5 style="color: #6F6F6F;">{{request.user.fechaNacimiento}}</h5>
+  
+          <h5><b>Tipo de usuario</b></h5>
+  
+          <h5 style="color: #6F6F6F;">{{request.user.tipo}}</h5>
+  
+      </div>
+    </div>
+</div>
+
+{% if messages %}
+<ul class="messages list-group mb-3">
+  {% for message in messages %}
+  <li {% if message.tags %} class="{{ message.tags }} list-group-item"  {%endif%} style="background-color: #8789c0; color: white;">{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% endblock content %}

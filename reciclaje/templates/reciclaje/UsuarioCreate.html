@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends 'reciclaje/base.html' %}
+{% block content %}
+<head>
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% load static %}
+    {% load widget_tweaks %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <main class="container p-2 bg-light border m-4">
+        <h1 class="text-center my-4">
+            Registro
+        </h1>
+        <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+            <div class="d-sm-flex justify-content-around px-3">
+                <div>
+                    <label for="CURP" class="mt-2">
+                        CURP
+                    </label>
+                    {{ form.CURP|add_class:"form-control"|attr:"style:background-color: #D9D9D9;  width: 325px;" }}
+                    <p class="mb-2">
+                        ¿No cuentas con tu CURP? Da clic <a href="https://www.gob.mx/curp/" style="color: #e01883 ;">aquí</a>
+                    </p>
+                    <label for="Nombre" class="my-2">
+                        Nombre(s)
+                    </label>
+                    {{ form.first_name|add_class:"form-control"|attr:"style:background-color: #D9D9D9;  width: 325px;" }}
+                    <label for="Ape_paterno" class="my-2">
+                        Apellido(s)
+                    </label>
+                    {{ form.last_name|add_class:"form-control"|attr:"style:background-color: #D9D9D9;  width: 325px;" }}
+                </div>
+                <div>
+                    <label for="Ape_paterno" class="mt-2">
+                        Correo Electronico
+                    </label>
+                    {{ form.email|add_class:"form-control mb-sm-4"|attr:"style:background-color: #D9D9D9;  width: 325px;" }}
+                    <label for="fechaNacimiento" class="mt-3 mb-2">
+                        Fecha de Nacimiento
+                    </label>
+                    {{ form.fechaNacimiento|add_class:"form-control"|attr:"style:background-color: #D9D9D9;  width: 325px;" }}
+                    <label for="puntos" class="my-2">
+                        Username
+                    </label>
+                    {{ form.username|add_class:"form-control"|attr:"style:background-color: #D9D9D9;  width: 325px;" }}
+                </div>
+            </div>
+        
+            
+
+            <div class="my-4 text-center">
+                <button type="submit" class="btn btn-primary w-25 mr-2" style="background-color: #0f7173 ; border: #0f7173;">Registrar</button>
+                <a href="./" type="submit" class="btn btn-danger w-25 mr-2"  style="background-color: #e01883 ;">Cancelar</a>
+            </div>
+    </form>
+    </main>
+    {% bootstrap_javascript jquery='full' %}     
+</body>
+</html>
+{% endblock content %}

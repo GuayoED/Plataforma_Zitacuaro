@@ -1,0 +1,173 @@
+{% extends 'reciclaje/base.html' %}
+{% load bootstrap4 %}
+
+{% block title %}Registro{% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+{% if form.errors %}
+
+<div class="conteiner">
+        <div class="alert alert-warning" role="alert" style="margin-top: 24px;">
+            <p>Ocurrio un error con tu formulario...</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+ </div>
+
+
+
+{% endif %}
+<!--
+<div class="container-xxl" style="padding-right: 1.625rem; padding-left: 1.625rem;">
+
+<div class="authentication-wrapper authentication-basic container-p-y" style="padding-bottom: 1.625rem !important; padding-top: 1.625rem !important; align-items: center; justify-content: center; display: flex; min-height: 100vh;">
+
+<div class="authentication-inner" style="width: 100%; height: 85vh; max-width: 400px; position: relative;"> 
+
+<div class="border m4" style="background-color:#F5F5F5 ; margin-top: 5%; margin-bottom: 5%;" >
+    
+
+
+<h1 style="text-align: center; color: #515151; ">Registro</h1>
+
+
+
+<form action="{% url 'register_escuela' %} " method="post" class=" m-3 form">
+    {% csrf_token %}
+
+    <div class=" flex-wrap justify-content-center p-3" style="gap: 10%;">
+
+    <div >
+        <label for="" class="form-label"> <h6 style="color: #515151;">Clave Escolar</h6></label>
+        {{form.CURP}}
+    </div>
+    
+
+    <div class="">
+        <label for="" class="form-label"> <h6 style="color: #515151;">Nombre de la escuela</h6></label>
+        {{form.first_name}}
+        
+    </div>
+   
+    <div class="">
+        <label for="" class="form-label"> <h6 style="color: #515151;">Correo Electronico</h6></label>
+        {{form.email}}
+    </div>   
+
+    <div class=""  >
+        <label for="" class="form-label"> <h6 style="color: #515151;">Contrseña</h6></label>
+        {{form.password1}}
+    </div>
+
+    <div class=""  >
+        <label for="" class="form-label"> <h6 style="color: #515151;">Repita su Contrseña</h6></label>
+        {{form.password2}}
+    </div>
+
+    <div class=""  >
+        <label for="" class="form-label"> <h6 style="color: #515151;">Repita su Contrseña</h6></label>
+        {{form.username}}
+    </div>
+
+
+
+    <div  style="margin-top: 25px;  text-align: center;" >
+        
+        <input type="submit" value="Registrar" class="btn btn-success">
+    </div>
+
+</div>
+    
+</form>
+
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+-->
+
+<section class="vh-90">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+          <div class="card shadow" style="border-radius: 1rem;">
+            <div class="row g-0">
+              <div class="col-md-6 col-lg-5 d-none d-md-block">
+                <img src="{% static 'reciclaje/img/re.png'%}"
+                  alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+              </div>
+              <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                <div class="card-body p-4 p-lg-5 text-black">
+  
+                  <form action="{% url 'register_escuela' %} " method="post">
+                    {% csrf_token %}
+  
+                    <div class="d-flex align-items-center text-center mb-3 pb-1">
+                      <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                      <span class="h1 fw-bold mb-0">Zitacuaro valuando lo limpio</span>
+                    </div>
+  
+                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Registro</h5>
+  
+                    <div class="form-outline mb-4">
+                        {{form.CURP}}
+                        <label class="form-label" for="form2Example17">Clave Escolar</label>
+                        <span class="text-error">{{ form.CURP.errors }}</span>
+                    </div>
+  
+                    <div class="form-outline mb-4">
+                        {{form.first_name}}
+                        <label class="form-label" for="form2Example17">Nombre de la escuela</label>
+                    </div>
+
+                  
+
+                    <div class="form-outline mb-4">
+                        {{form.email}}
+                        <span class="text-error">{{ form.email.errors }}</span>
+                        <label class="form-label" for="form2Example17">Correo Electronico</label>
+                    </div>
+
+                  
+
+                
+
+                    <div class="form-outline mb-4">
+                        {{form.password1}}
+                        <span class="text-error">{{ form.password1.errors }}</span>
+                        <label class="form-label" for="form2Example27">Contrseña</label>
+                    </div>
+  
+                    <div class="form-outline mb-4">
+                        {{form.password2}}
+                        <span class="text-error">{{ form.password2.errors }}</span>
+                        <label class="form-label" for="form2Example27">Repita su Contrseña</label>
+                    </div>
+                      
+                    <div class="pt-1 mb-4">
+                      <input type="submit" value="Registrar" class="btn btn-lg btn-block"  style="background-color: #0f7173; color: white;">
+                    </div>
+  
+                    <!--<a class="small text-muted" href="#!">¿Olvidaste tu contraseña?</a>-->
+                    <p class="mb-5 pb-lg-2" style="color: #393f81;">¿Ya tienes cuenta? <a href="{%url 'login'%}"
+                        style="color: #393f81;">Inicia sesión</a></p>
+                    <p class="mb-5 pb-lg-2" style="color: #393f81;">¿Eres un habitante de Zitacuaro? <a href="{%url 'register_user'%}"
+                        style="color: #393f81;">Has tu registro aquí.</a></p>
+                  </form>
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

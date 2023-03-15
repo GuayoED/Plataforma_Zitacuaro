@@ -1,0 +1,65 @@
+{% extends 'reciclaje/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Editar perfil{% endblock %}
+
+{% block content %}
+    <!-- NO L -->
+    <main class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center flex-column">
+            <div class="card p-4 border-0">
+
+                <span class="h1 fw-bold mb-0 text-center">
+                Editar usuario
+                </span>
+            <div class="text-center">
+                <img class="rounded-circle p-0" src="{{user.pic.url}}" style="cursor: pointer; width: 150px; height: 150px;">
+            </div>
+        {% if user_form.errors %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <div id="form_errors">
+                    {% for key, value in user_form.errors.items %}
+                        <strong>{{ value }}</strong>
+                    {% endfor %}
+                </div>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
+
+        <div class="form-content">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div>
+                        <div class="form-group">
+                            <label class="form-label" for="form2Example17">Nombres:</label>
+                                {{ user_form.first_name }}
+                            <label class="form-label" for="form2Example17">Apellidos:</label>
+                                {{ user_form.last_name }}
+                            <label class="form-label" for="form2Example17">Correo Electronico:</label>
+                                {{ user_form.email }}    
+                        </div>
+                        <div class="form-group">
+                            <a href="{% url 'cambiar_contra' %}">Cambiar Contraseña</a>
+                            <hr>
+                            <label class="">Cambiar imagen de perfil:</label>
+                            {{ user_form.pic }}   
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+                <button type="submit" class="btn btn-primary btn-lg" style="background-color: #0f7173; color: white;">Guardar cambios</button>
+                <button type="reset" class="btn btn-primary btn-lg" style="background-color: #0f7173; color: white;">Resetear</button>
+            </form>
+        </div>   
+
+    </div>
+    </div>
+            
+
+    </main>
+
+{% endblock %}  
+  

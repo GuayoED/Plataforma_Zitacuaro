@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!--Bootstrap ref-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>{% block title %} {% endblock %}</title>
+    <!--css personal-->
+    <link rel="stylesheet" href='{% static 'reciclaje/css/'%}Styles.css'>
+    <!--Bootstrap stylesheet-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <!--Bootstrap icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/datatables.css"/> -->
+    <!-- <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/datatables.js"></script> -->
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.3/css/buttons.bootstrap5.css"/>
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.3/js/dataTables.buttons.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.3/js/buttons.bootstrap5.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.3/js/buttons.html5.js"></script>
+
+
+    
+
+</head>
+<body>
+    <nav class="navbar navbar-dark navbar-expand-md shadow" style="background-color: #6F6F6F; margin-bottom: 24px;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'homee' %}"><img src="{% static 'reciclaje/img/'%}HZG_SFB.png" alt="logo" width="100" height="45"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% url 'homee' as url %}
+                <li class="nav-item ">
+                    <a class="nav-link {% if request.path == url %}active{% endif %}" aria-current="page" href="{% url 'homee' %}"><i class="bi bi-house-fill"></i> Inicio </a>
+                  </li>
+                  {% url 'TablaEquivalencia' as url %}  
+                  <li class="nav-item">
+                    <a class="nav-link {% if request.path == url %}active{% endif %}" href="{% url 'TablaEquivalencia' %}"><i class="bi bi-card-checklist"></i> Lista de precios</a>
+                  </li>
+                  {% url 'catalogo' as url %}
+                  <li class="nav-item">
+                    <a class="nav-link {% if request.path == url %}active{% endif %}" href="{% url 'catalogo' %}"><i class="bi bi-bag-fill"></i> Catalogo de recompensas</a>
+                  </li>
+                  {% if perms.reciclaje.canjeador %}
+                  {% url 'canjearPremios' as url %}
+                  <li class="nav-item">
+                    <a class="nav-link {% if request.path == url %}active{% endif %}" href="{% url 'canjearPremios' %}"><i class="bi bi-cash-coin"></i> Canjear premio</a>
+                  </li>
+                  {% endif %}
+                  {% if perms.reciclaje.recolector %}
+                  {% url 'DispoEngtrega' as url %}
+                  <li class="nav-item">
+                    <a class="nav-link {% if request.path == url %}active{% endif %}" href="{% url 'DispoEngtrega' %}"><i class="bi bi-archive"></i> Registrar Disposición Final</a>
+                  </li>
+                  {% url 'reportes' as url %}
+                  <li class="nav-item">
+                    <a class="nav-link {% if request.path == url %}active{% endif %}" href="{% url 'reportes' %}"><i class="bi bi-clipboard-data"></i> Reportes</a>
+                  </li>
+                  {% endif %}
+                  
+                  {% if user.is_authenticated%}
+                
+                  <div class="dropdown-center">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                      <img src="{% static 'reciclaje/img/'%}{{request.user.pic}}" alt="mdo" width="43" height="43" class="rounded-circle">
+                    </a>
+                    
+                    <ul class="dropdown-menu text-small">
+                      {% if perms.reciclaje.canjeador or perms.reciclaje.recolector %}
+                      <li><a class="dropdown-item" href="{% url 'leerUsuarios' %}"><i class="bi bi-person-circle"></i> Usuarios</a></li>
+                      {% endif %}
+                      {% if perms.reciclaje.admin %}
+                      <li><a class="dropdown-item" href="{% url 'leerDispoFinal' %}"><i class="bi bi-recycle"></i> Disposición final(producto a reciclar)</a></li>
+                      <li><a class="dropdown-item" href="{% url 'leerPuntosReciclaje' %}"><i class="bi bi-shop"></i></i> Puntos de Reciclaje</a></li>
+                      {% endif %}
+                      
+                      {% if perms.reciclaje.canjeador %}
+                      <li><a class="dropdown-item" href="{% url 'leerPremios' %}"><i class="bi bi-gift"></i> Recompensas</a></li>
+                      {% endif %}
+                      
+                      <li><hr class="dropdown-divider"></li>
+                      
+                      <li><a class="dropdown-item" href="{% url 'misproductos' %}"><i class="bi bi-clock-history"></i> Consultar historial de productos canjeados</a></li>
+                      <li><a class="dropdown-item" href="{% url 'mi_perfil' %}"><i class="bi bi-piggy-bank"></i> Consultar puntos</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="bi bi-box-arrow-in-left"></i>Cerrar sesión</a></li>
+                    </ul>
+                  </div>
+  
+                  {% else %}
+                  <li class="nav-item">
+                    {% url 'login' as url %}
+                    <a class="nav-link {% if request.path == url %}active{% endif %}" href="{% url 'login' %}"><i class="bi bi-door-open-fill"></i> Inicia sesión</a>
+                  </li>
+                  <li class="nav-item">
+                    {% url 'register_user' as url %}
+                    <a class="nav-link {% if request.path == url %}active{% endif %}" href="{% url 'register_user' %}"><i class="bi bi-box-arrow-in-up"></i> Registrate</a>
+                  </li>
+                  {% endif %}
+            </ul>
+
+          </div>
+
+      </nav>
+
+      <!-- {% if not perms.reciclaje.admin %}
+      <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color: #0f7173;">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                    <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                        <span class="fs-5 d-none d-sm-inline">Menu</span>
+                    </a>
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link align-middle px-0">
+                                <i class="fs-4 bi-house" style="color: white;"></i> <span class="ms-1 d-none d-sm-inline" style="color: white;">Home</span>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    <hr>
+                    <div class="dropdown pb-4">
+                        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                            <span class="d-none d-sm-inline mx-1">loser</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                            <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col py-3">
+              {% endif %}
+              <div class="container">
+    
+                
+           
+            {% if perms.reciclaje.admin %}
+            </div>
+        </div>
+    </div>
+    {% endif %} -->
+
+  
+
+      <div class="container" >
+      {% block content %}(no content){% endblock %}
+    </div>  
+ 
+
+    <footer class="footer" style="margin-top: auto;">
+    <div class="row">
+        <div class="col-6 d-flex justify-content-between align-items-center">
+          <span class="mb-3 mb-md-0" style="color: white;">Copyright © Ayuntamiento de Zitácuaro | Todos los derechos Reservados </span>
+        </div>
+    
+        <ul class="nav col-6 justify-content-end align-items-center list-unstyled d-flex">
+          <a class="nav-link" href="#" style="color: white;"><i class="bi bi-instagram"></i></a>
+          <a class="nav-link" href="#" style="color: white;"><i class="bi bi-facebook"></i></a>
+          <a class="nav-link" href="#" style="color: white;"><i class="bi bi-youtube"></i></a>
+        </ul>
+      
+      </footer>
+
+        <!--Bootstrap JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+      </div>
+</body>
+</html>

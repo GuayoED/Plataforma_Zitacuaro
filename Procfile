@@ -1,0 +1,1 @@
+web: gunicorn reciclaje_app.wsgi --log-file -

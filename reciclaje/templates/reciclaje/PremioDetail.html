@@ -1,0 +1,55 @@
+{% extends 'reciclaje/base.html' %}
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h4>Detalles</h4>
+    <p><span class="txt_negrita">Nombre:</span> <br> {{object.nombre}} </p>
+    <p><span class="txt_negrita">Valor:</span> <br>  {{object.valor}} </p>
+    <p><span class="txt_negrita">Stock:</span> <br>  {{object.stock}} </p>
+    <p><span class="txt_negrita">Imagen:</span> <br> <img src="{% static 'reciclaje/img/' %}{{ premio.imagen }}" alt="{{ premio.nombre }}" width="40%"> </p>
+
+
+    <a href="{% url 'leerPremios' %}" type="submit" class="btn btn-primary" >Volver</a>
+
+    {% bootstrap_javascript jquery='full' %}     
+</body>
+</html>-->
+
+
+{% block content %}
+{% load static %}
+
+<div class="d-flex container-xl" style="justify-content: center;">
+    <div class="card text-bg-light" style="max-width: 25rem; margin-top: 20px;">
+      <div class="m-3" style="text-align: center;">
+
+        <h3><b>Detalles</b></h3>
+
+        <h5><b>Imagen:</b></h5>
+
+          <img src="{% static 'reciclaje/img/' %}{{ premio.imagen }}" alt="foto premio" height="200" class="rounded" style="max-width: 200px;">
+
+          <h5><b>Nombre: <h5 style="color: #6F6F6F;">{{object.nombre}}</h5></b></h5>
+
+          <h5><b>Valor:<span class="badge" style="background-color: #E01883;"> <h5>{{object.valor}} pts</h5></span></b></h5>
+
+          <h5><b>Stock: <h5 style="color: #6F6F6F;">{{object.stock}}</h5></b></h5>
+          
+      </div>
+    </div>
+</div>
+<div class="justify-content-center" align ="center" style="margin-top: 3rem;">
+  <a href="{% url 'leerPremios' %}" type="submit" class="btn btn-primary" style="background-color: #0f7173; border: #0f7173;">Volver</a>
+  </div>
+
+{% endblock content %}

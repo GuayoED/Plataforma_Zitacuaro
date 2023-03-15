@@ -1,0 +1,93 @@
+{% extends 'reciclaje/base.html' %}
+{% block content %}
+{% load static %}
+
+<!--
+<div class="row justify-content-around m-3">
+    <div class="card text-bg-success shadow col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6  m-1 text-center justify-content-center">
+        <h2>Registrate en la página</h2>
+        <p>Para crear tu usuario dentro de la página y comenzar a ganar las recompenzas que tenemos para ti, ve a la pestaña que dice registrate, ahi necesitarás ingresar los siguientes datos: CURP, Nombre, apellidos, correo electronico, usuario, fecha de nacimiento y contraseña </p>
+    </div>
+    <div class="card shadow col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5  sm-order-first"><img src="{% static 'reciclaje/img/'%}Paso.png" class="card-img" alt="paso 1"></div>
+</div>
+<div class="row justify-content-around m-3">
+    <div class="card shadow col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 sm-order-first"><img src="{% static 'reciclaje/img/'%}Paso2.png" class="card-img" alt="paso 1"></div>
+
+    <div class="card text-bg-success shadow col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 m-1 text-center justify-content-center">
+        <h2>Recolecta puntos</h2>
+        <p>Ve a tu centro de recolección mas cercano, con tu dispocisión final lista para pesar, los precios del kilo de cada uno de las dispocisiones finales las encontrarás en la lista de precios, después el recolector te sumará los puntos dentro de tu cuenta donde podrás ver tus puntos acumulados, al iniciar sesión dirigirte donde esta tu foto y dandole clic donde dice consultar puntos</p>
+    </div>
+</div>
+<div class="row justify-content-around m-3">
+    <div class="card text-bg-success shadow col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 m-1 text-center justify-content-center">
+        <h2>Canjea premios</h2>
+        <p>Puedes ver los premios que puedes cambiar según los puntos que tienes acumulados, estos se ecuentran en la pestaña catalogo de recompensas de los cuales puedes escoger para desupés ir con el canjeador para elegir tu premio para posterriormente recogerlo.</p>
+    </div>
+    <div class="card shadow col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 sm-order-first"><img src="{% static 'reciclaje/img/'%}Paso3.png" class="card-img" alt="paso 1"></div>
+</div>
+-->
+<div class="container mt-4">
+    
+    <h1 style="font-size: 4.5rem;
+    font-weight: 700;
+    line-height: 4.5rem;
+    text-align: center;
+    margin-bottom: 4rem;">
+        Zitácuaro, valuando lo limpio
+    </h1>
+    
+    <p class="fs-2 fw-bold m-4">¿Como funciona?</p>
+    <p class="fs-3 text-muted ms-4">Para entender como funciona el sistema solo pon atención a los siguientes pasos</p>
+</div>
+
+<hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <div class="card justify-content-center h-100 border-0">
+        <h2 class="featurette-heading">Registrate <span class="text-muted">en la página.</span></h2>
+        <p class="lead">Para crear tu usuario dentro de la página y comenzar a ganar las recompenzas que tenemos para ti, ve a la pestaña que dice registrate, ahi necesitarás ingresar los siguientes datos: CURP, Nombre, apellidos, correo electronico, usuario, fecha de nacimiento y contraseña.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+
+        <div class="card shadow col-12 sm-order-first"><img src="{% static 'reciclaje/img/'%}Paso1.png" class="card-img" alt="paso 1"></div>
+
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-2">
+        <div class="card justify-content-center h-100 border-0">
+        <h2 class="featurette-heading">Acumula <span class="text-muted">Puntos.</span></h2>
+        <p class="lead">Ve a tu centro de recolección mas cercano, con tu dispocisión final lista para pesar, los precios del kilo de cada uno de las dispocisiones finales las encontrarás en la lista de precios, después el recolector te sumará los puntos dentro de tu cuenta donde podrás ver tus puntos acumulados, al iniciar sesión dirigirte donde esta tu foto y dandole clic donde dice consultar puntos.</p>
+        </div>
+      </div>
+      <div class="col-md-4 order-md-1">
+
+        <div class="card shadow col-12 sm-order-first"><img src="{% static 'reciclaje/img/'%}Paso2.png" class="card-img" alt="paso 2"></div>
+
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <div class="card justify-content-center h-100 border-0">
+        <h2 class="featurette-heading">Canjealos <span class="text-muted">por premios.</span></h2>
+        <p class="lead">Puedes ver los premios que puedes cambiar según los puntos que tienes acumulados, estos se ecuentran en la pestaña catalogo de recompensas de los cuales puedes escoger para desupés ir con el canjeador para elegir tu premio para posterriormente recogerlo.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+
+        <div class="card shadow col-12 sm-order-first"><img src="{% static 'reciclaje/img/'%}Paso3.png" class="card-img" alt="paso 3"></div>
+
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+{% endblock content %}

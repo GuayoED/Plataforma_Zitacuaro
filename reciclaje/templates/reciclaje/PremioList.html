@@ -1,0 +1,139 @@
+{% extends 'reciclaje/base.html' %}
+{% load bootstrap4 %}
+
+{% load static %}
+
+{% block title %}Listar Premios{% endblock %}
+
+{% block content %}
+
+<div align ="center" class="btn_crear mb-3" style="margin: 1rem;" >
+    <a href="{% url 'crearPremios' %}" title="crear" type="button" class="btn btn-primary" style="background-color: #0f7173;border: #0f7173;"> <i class="bi bi-plus-circle-fill"></i>
+    Crear premio</a>
+</div>
+    
+        <form action=""  method="get">
+            {% csrf_token %}
+        <div class="input-group mb-3">
+            <input type="search" class="form-control" placeholder="Buscar..." name="buscar">
+            <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+            </div>
+        </div>
+        </form>
+
+
+    <table class="table table-striped table-hover table-responsive-sm shadow">
+        <thead>
+            <tr style="background-color: #f72585 ;">
+                <th style="color:white ;" width="35%">Nombre</th>
+                <th style="color:white ;">Valor</th>
+                <th style="color:white ;">Stock</th>
+                <th style="color:white ;">Imagen</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for premio in object_list %}
+            <tr>
+                <td>{{ premio.nombre }}</td>
+                <td>{{ premio.valor }} pts</td>
+                <td>{{ premio.stock }} unidades</td>
+                <td><img src="{% static 'reciclaje/img/' %}{{ premio.imagen }}" class="img-fluid" alt="{{ premio.nombre }}" style="width: 150px;height: 150px;"></td>
+                <td>
+                    <form action="{% url 'eliminarPremio' premio.id %}" method="post">
+                        {% csrf_token %}
+                        {% comment %} <div class="btn-group d-flex flex-column align-items-center-sm" >
+                            <button href="{% url 'detallesPremio' premio.id %}" title="Ver" type="button" class="btn btn-success my-2" style="width:90px">
+                                Ver
+                            </button>
+                            <button href="{% url 'editarPremio' premio.id %}" title="Editar" type="button" class="btn btn-primary my-2" style="width:90px">
+                                Editar
+                            </button>
+                            <button class="btn btn-danger my-2" onclick="return eliminar();" type="submit" style="width:90px">
+                                Eliminar
+                            </button>
+                        </div> {% endcomment %}
+                        <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Acciones
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <a href="{% url 'detallesPremio' premio.id  %}" title="Ver" type="button" class="btn dropdown-item">
+                                    <i class="bi bi-eye"></i> Ver                                </a>
+                                <a href="{% url 'editarPremio' premio.id %}" title="Editar" type="button" class="btn dropdown-item">
+                                    <i class="bi bi-pencil"></i>Editar        
+                                 </a>
+                                 <button class="dropdown-item" onclick="return eliminar();" type="submit">
+                                    <i class="bi bi-trash3"></i>         Eliminar  </button>                                
+                            </div>
+                        </div>
+                    </form>
+                </td>
+            
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+    {% if is_paginated %}
+        
+    <ul class="pagination">
+
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a href="?page={{ page_obj.previous_page_number }}" class="page-link">Anterior</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a href="#" class="page-link">Anterior</a>
+        </li>
+        {% endif %}
+
+        {% for i in paginator.page_range %}
+
+        
+        <li class="page-item {% if page_obj.number == i %} active {% endif %}">
+            <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+        </li>
+        
+        {% endfor %}
+
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a href="?page={{ page_obj.next_page_number }}" class="page-link">Siguiente</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a href="#" class="page-link">Siguiente</a>
+        </li>
+        {% endif %}
+
+    </ul>
+    {% endif %}
+
+
+
+    <script type="text/javascript">
+        function eliminar() {
+          var x = confirm("Eliminar Producto ?");
+          if (x)
+            return true;
+          else
+            return false;
+        }
+      </script>
+
+{% if messages %}
+<ul class="messages list-group mb-3">
+  {% for message in messages %}
+  <li {% if message.tags %} class="{{ message.tags }} list-group-item"  {%endif%} style="background-color: #8789c0; color: white;">{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+    {% bootstrap_javascript jquery='full' %}
+    
+    {% endblock %}

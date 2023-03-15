@@ -1,0 +1,155 @@
+{% extends 'reciclaje/base.html' %}
+{% load bootstrap4 %}
+
+{% block title %}Listar Usuarios{% endblock %}
+
+{% block content %}
+
+   
+    <h1 class="my-4" style="text-align: center ;">
+        Usuarios
+        
+    </h1>
+    
+    <form action=""  method="get" >
+        {% csrf_token %}
+    <div class="input-group mb-3">
+        <input type="search" class="form-control" placeholder="Buscar..." name="buscar">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+        </div>
+      </div>
+    </form>
+
+
+    <div class="container shadow" style="overflow-x: scroll;">
+
+    <div class="col-12">
+
+
+        <!--<div align ="center" class="btn_crear mb-3 " style="margin: 1rem;" >
+            <a href="{% url 'crearUsuarios' %}" title="crear" type="button" class="btn btn-primary" style="background-color: #0f7173;border: #0f7173;"> <i class="bi bi-plus-circle-fill"></i>
+            Crear usuario</a>
+        </div>-->
+
+    <table class="table table-striped  shadow " >
+        <thead>
+            <tr style="background-color: #f72585 ;">
+                <th style="color:white ;">CURP</th>
+                <th style="color:white" >Estado</th>
+                <th style="color:white">Nombre</th>
+                <th style="color:white" >Apellidos</th>
+                <th style="color:white"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in object_list %}
+            <tr>
+                <td>{{ usuario.CURP }}</td>
+                {% if usuario.is_active %}
+                    <td><i class="bi bi-check-square-fill text-success"></i></td>
+                {% else %}
+                    <td><i class="bi bi-x-square-fill text-danger"></i></td>
+                {% endif %}
+                <td>{{ usuario.first_name }}</td>
+                <td>{{ usuario.last_name }}</td>
+                <td>
+                    <form action="{% url 'eliminarUsuario' usuario.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Acciones
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                {% if perms.reciclaje.canjeador or perms.reciclaje.recolector %}  
+                                <a href="{% url 'detallesUsuario' usuario.id %}" title="Ver" type="button" class="btn dropdown-item">
+                                    <i class="bi bi-eye"></i> Ver
+                                </a>
+                               {% endif %}
+                               {% if perms.reciclaje.admin %} 
+                                <a href="{% url 'editarUsuario' usuario.id %}" title="Editar" type="button" class="btn dropdown-item">
+                                    <i class="bi bi-pencil"></i> Editar
+                                </a>
+                                {% if usuario.CURP in lista_trabajadores %}
+                                <a href="{% url 'trabajador' usuario.id %}" title="Editar" type="button" class="btn dropdown-item">
+                                    <i class="bi bi-pencil"></i> Editar lugar de trabajo
+                                </a>
+                                {% endif %}
+                                <button class="btn bg-danger text-light dropdown-item" onclick="return eliminar();" type="submit">
+                                    <i class="bi bi-trash3"></i>         Eliminar                                </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+
+    </table>
+
+    
+
+    {% if is_paginated %}
+        
+    <ul class="pagination">
+
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a href="?page={{ page_obj.previous_page_number }}" class="page-link">Anterior</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a href="#" class="page-link">Anterior</a>
+        </li>
+        {% endif %}
+
+        {% for i in paginator.page_range %}
+
+        
+        <li class="page-item {% if page_obj.number == i %} active {% endif %}">
+            <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+        </li>
+        
+        {% endfor %}
+
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a href="?page={{ page_obj.next_page_number }}" class="page-link">Siguiente</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a href="#" class="page-link">Siguiente</a>
+        </li>
+        {% endif %}
+
+    </ul>
+    {% endif %}
+
+</div>
+
+</div>
+
+    <script type="text/javascript">
+        function eliminar() {
+          var x = confirm("Eliminar Usuario ?");
+          if (x)
+            return true;
+          else
+            return false;
+        }
+      </script>
+
+{% if messages %}
+<ul class="messages list-group mb-3">
+  {% for message in messages %}
+  <li {% if message.tags %} class="{{ message.tags }} list-group-item"  {%endif%} style="background-color: #8789c0; color: white;">{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+    {% bootstrap_javascript jquery='full' %}
+    
+    {% endblock %}

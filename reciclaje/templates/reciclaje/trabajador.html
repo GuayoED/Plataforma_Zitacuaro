@@ -1,0 +1,28 @@
+{% extends 'reciclaje/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+    <main class="container p-2 bg-light border shadow">
+        <h1 class="text-center my-4">
+            Asignale un lugar de trabajo.
+        </h1>
+   <main action="" method="post" enctype="multipart/form-data">
+   {% csrf_token %}
+   <form action="" method="post" enctype="multipart/form-data" class="justify-content-center">
+    {% csrf_token %}
+    
+        <div class="form-group m-2 my-2" style="text-align: center;">
+            <label for="Nombre" class="txt_negrita">
+                <h3>Lugar</h3>
+            </label>
+            <div class="m-2" style="display:flex; justify-content: center;">
+            {{ form.lugar|add_class:"form-control"|attr:"style:background-color: #D9D9D9;  width: 325px;" }}
+            </div>
+            <button type="submit" class="btn btn-primary m-2" style="background-color: #0f7173 ; border: #0f7173;">Actualizar</button>    
+        </div>
+      
+            
+    </form>
+       
+
+{% endblock content %}
