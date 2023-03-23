@@ -42,6 +42,11 @@ ALLOWED_HOSTS = ['*']
 
 LOGIN_URL = '/usuarios/login_user'
 
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED =False   
+ACCOUNT_USERNAME_REQUIRED = False
+
+
 
 # Application definition
 
