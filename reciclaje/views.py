@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView , DeleteView
 #Instanciamos los modelos
-from .models import User , Premio, DispoFinal, Premio_usuario, PuntosReciclaje, Entradas, Trabajador, Descuentos
+from .models import User , Premio, DispoFinal, Premio_usuario, PuntosReciclaje, Entradas, Trabajador
 
 #Sirve para hacer un reverse
 from django.urls import reverse, reverse_lazy
@@ -414,17 +414,3 @@ class TrabajadorActualizar(PermissionRequiredMixin, SuccessMessageMixin, UpdateV
 
     def get_success_url(self):
         return reverse ('leerUsuarios')
-    
-
-class DescuentosActualizar(PermissionError, SuccessMessageMixin, UpdateView):
-    permission_required = 'reciclaje.admin'
-    model = Descuentos
-    form = Descuentos
-    fields = ['descuentos']
-    success_message = "Descuento registrado correctamente"
-
-    def get_success_url(self):
-        return reverse ('leerUsuarios')
-    
-
-

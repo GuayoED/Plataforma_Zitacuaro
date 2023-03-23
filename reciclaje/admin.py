@@ -11,7 +11,6 @@ admin.site.register(DispoFinal)
 admin.site.register(Entradas)
 admin.site.register(PuntosReciclaje)
 admin.site.register(Trabajador)
-admin.site.register(Descuentos)
 
 
 
