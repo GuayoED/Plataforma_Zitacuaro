@@ -12,7 +12,7 @@
         </h1>
         <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        
+
             <div class="d-sm-flex justify-content-around px-3">
                 <div>
                     <label for="CURP" class="mt-2">
@@ -27,9 +27,7 @@
                         Apellido(s)
                     </label>
                     {{ form.last_name|add_class:"form-control"|attr:"style:background-color: #D9D9D9;  width: 325px;" }}
-                    <label class="my-2" >
-                        Tipo de usuario
-                    </label>
+
                     {{ form.tipo|add_class:"form-control"|attr:"style:background-color: #D9D9D9;  width: 325px;" }}
                 </div>
                 <div>
@@ -54,16 +52,16 @@
                     </label>
                     {{ form.is_active }}
                 </div>
-                
+
 
             </div>
-        
+
             <div class="my-4 text-center">
                 <button type="submit" class="btn btn-primary w-25 mr-2" style="background-color: #0f7173 ; border: #0f7173;">Actualizar</button>
                 <a href="../" type="submit" class="btn btn-danger w-25 mr-2"  style="background-color: #e01883 ;">Cancelar</a>
             </div>
     </form>
     </main>
-    {% bootstrap_javascript jquery='full' %}     
+    {% bootstrap_javascript jquery='full' %}
 
     {% endblock %}
