@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 
+# Formulario para que el usuario pueda editar el perfil
+
 class UpdateUserForm(forms.ModelForm):
     email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class': 'form-control form-control-lg'}))
     first_name = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'form-control form-control-lg'}))

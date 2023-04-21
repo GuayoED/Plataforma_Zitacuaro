@@ -6,6 +6,9 @@ from django.contrib.auth.forms import UserCreationForm
 class DateTimeInput(forms.DateTimeInput):
     input_type = 'date'
 
+
+# Formulario para la creacion de usuario habitante    
+
 class CustomUserCreationForm(UserCreationForm):
     CURP = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control form-control-lg', 'minlength':'18' , 'maxlength':'18'}))
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control form-control-lg'}))
@@ -27,7 +30,7 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['password1'].widget.attrs['class'] = 'form-control form-control-lg'
         self.fields['password2'].widget.attrs['class'] = 'form-control form-control-lg'
 
-
+# Formulario para la creacion de usuario escuela
 
 class CustomEscuelaCreationForm(UserCreationForm):
     CURP = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control form-control-lg'}))

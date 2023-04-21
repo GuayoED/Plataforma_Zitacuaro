@@ -6,6 +6,9 @@ from django.contrib import messages
 from .forms import CustomUserCreationForm, CustomEscuelaCreationForm
 from django.contrib.auth.models import Group, Permission
 
+
+#Se encarga de el acceso de inicio de sesion
+
 def login_user(request):
     if request.method == "POST":
        curp = request.POST['curp']

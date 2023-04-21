@@ -5,6 +5,8 @@ from reciclaje.models import Premio_usuario
 from .views import *
 from django.contrib.auth.decorators import login_required, permission_required
 
+# URLS de la parte funcional de la pagina web
+
 urlpatterns = [
     path('', home, name='homee'),
     path('catalogo/', RecompensasList.as_view(template_name = "reciclaje/catalogo.html"), name='catalogo'),

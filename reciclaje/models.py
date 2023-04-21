@@ -6,6 +6,8 @@ from django.contrib.auth.models import AbstractUser
 from PIL import Image
 
 
+# Diferentes tablas con sus campos en la BD
+
 class PuntosReciclaje(models.Model):
      nombre = models.CharField(primary_key=True, max_length = 40, default="")
      direccion = models.CharField( max_length = 40, default="")
