@@ -28,15 +28,14 @@
 -->
 <div class="container mt-4">
 
-
-    {% if messages %}
+  {% if messages %}
   <ul class="messages list-group mb-3">
     {% for message in messages %}
     <li {% if message.tags %} class="{{ message.tags }} list-group-item"  {%endif%} style="background-color: #8789c0; color: white;">{{ message }}</li>
     {% endfor %}
   </ul>
   {% endif %}
-
+    
     <h1 style="font-size: 4.5rem;
     font-weight: 700;
     line-height: 4.5rem;
@@ -44,7 +43,7 @@
     margin-bottom: 4rem;">
         Zitácuaro, valuando lo limpio
     </h1>
-
+    
     <p class="fs-2 fw-bold m-4">¿Como funciona?</p>
     <p class="fs-3 text-muted ms-4">Para entender como funciona el sistema solo pon atención a los siguientes pasos</p>
 </div>

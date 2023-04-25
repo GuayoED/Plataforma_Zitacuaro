@@ -8,9 +8,7 @@ from django.db.models import Sum
 from .forms import ReporteForm
 from reciclaje.models import Entradas
 
-
-#Se encarga de generar y mostrar reportes
-
+# Create your views here.
 class ReporteView(TemplateView):
     template_name = 'reportes/reporte.html'
 

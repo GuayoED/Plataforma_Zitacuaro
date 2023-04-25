@@ -5,8 +5,6 @@ from reciclaje.models import Premio_usuario
 from .views import *
 from django.contrib.auth.decorators import login_required, permission_required
 
-# URLS de la parte funcional de la pagina web
-
 urlpatterns = [
     path('', home, name='homee'),
     path('catalogo/', RecompensasList.as_view(template_name = "reciclaje/catalogo.html"), name='catalogo'),
@@ -21,7 +19,7 @@ urlpatterns = [
     path('premios/crear', RecompensasCreate.as_view(template_name = "reciclaje/PremioCreate.html"), name='crearPremios'),
     path('premios/detalle/<str:pk>', RecompensasDetalle.as_view(template_name="reciclaje/PremioDetail.html"), name='detallesPremio'),
     path('premios/editar/<str:pk>', RecompensasActulizar.as_view(template_name="reciclaje/PremioUpdate.html"), name='editarPremio'),
-    path('premios/eliminar/<str:pk>', RecompensasEliminar.as_view(template_name="reciclaje/PremioDelete.html"), name='eliminarPremio'),
+    path('premios/eliminar/<str:pk>', RecompensasEliminar.as_view(template_name="reciclaje/PremioDelete.html"), name='eliminarPremio'), 
 
     path('PuntosReciclaje/', PuntosReciclajelist.as_view(template_name = 'reciclaje/PuntosReciclajelist.html'), name = 'leerPuntosReciclaje'),
     path('PuntosReciclaje/detalle/<str:pk>', PuntosReciclajeDetalle.as_view(template_name = 'reciclaje/PuntosReciclajedetail.html'), name = 'detallePuntosReciclaje'),
@@ -38,8 +36,8 @@ urlpatterns = [
     path('dispofinal/editar/<str:pk>', DispoFinalActualizar.as_view(template_name = 'reciclaje/dispofinalUpdate.html'), name = 'editarDispofinal'),
     path('dispofinal/eliminar/<str:pk>', DispoFinalDelete.as_view(template_name = 'reciclaje/dispofinaleliminar.html'), name = 'eliminarDispofinal'),
     path('TablaEquivalencia/', Equivalencia.as_view(template_name = 'reciclaje/Equivalencia.html'), name = 'TablaEquivalencia'),
-
-
+  
+    
 
     path('premios/canjear', RecompensasUsuarioCreate.as_view(template_name = "reciclaje/PremioCanjear.html"), name='canjearPremios'),
     path('catalogo/buscar', buscar_productos, name='catalogo_b'),
@@ -49,6 +47,6 @@ urlpatterns = [
     path('cambio_contraseña/', CambiarContraView.as_view(), name='cambiar_contra'),
     path('dispocisionfinal/entrega', EntregaDispo.as_view(template_name = "reciclaje/DispocisionFinalEntrega.html"), name='DispoEngtrega'),
 
-
+    
     path('trabajador/<str:pk>', TrabajadorActualizar.as_view(template_name = "reciclaje/trabajador.html"), name='trabajador'),
 ]

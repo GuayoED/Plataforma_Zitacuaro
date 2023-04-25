@@ -2,7 +2,18 @@
 {% block content %}
 {% load static %}
 
+
+{% if messages %}
+<ul class="messages list-group mb-3">
+  {% for message in messages %}
+  <li {% if message.tags %} class="{{ message.tags }} list-group-item"  {%endif%} style="background-color: #8789c0; color: white;">{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
 <div class="d-flex container-xl" style="justify-content: center;">
+
+
     <div class="card text-bg-light mb-4" style="max-width: 25rem; margin-top: 20px;">
       <div class="m-3" style="text-align: center;">
 

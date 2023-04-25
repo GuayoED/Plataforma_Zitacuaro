@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView , DeleteView
 #Instanciamos los modelos
-from .models import User , Premio, DispoFinal, Premio_usuario, PuntosReciclaje, Entradas, Trabajador
+from .models import User , Premio, DispoFinal, Premio_usuario, PuntosReciclaje, Entradas, Trabajador, Descuentos
 
 #Sirve para hacer un reverse
 from django.urls import reverse, reverse_lazy
@@ -23,7 +23,7 @@ from django.db.models import Q
 
 
 def home(request):
-
+    
     return render(request, 'reciclaje/home.html')
 
 
@@ -73,7 +73,7 @@ class UsuarioCreate( PermissionRequiredMixin, SuccessMessageMixin, CreateView):
 
     def get_success_url(self):
         return reverse('leerUsuarios')
-
+        
 
 class UsuarioDetalle(PermissionRequiredMixin, DetailView):
     model = User
@@ -131,7 +131,7 @@ class RecompensasList( ListView):
         queryset = self.request.GET.get("buscar")
         if queryset:
             resultado = Premio.objects.filter(
-                Q(nombre__icontains = queryset)
+                Q(nombre__icontains = queryset) 
             ).distinct()
             context['object_list'] = resultado
         return context
@@ -184,7 +184,7 @@ class DispoFinallist(PermissionRequiredMixin, ListView):
         queryset = self.request.GET.get("buscar")
         if queryset:
             resultado = DispoFinal.objects.filter(
-                Q(nombre__icontains = queryset)
+                Q(nombre__icontains = queryset) 
             ).distinct()
             context['object_list'] = resultado
         return context
@@ -199,7 +199,7 @@ class DispoFinalCreate(PermissionRequiredMixin, SuccessMessageMixin, CreateView)
     form = DispoFinal
     fields = "__all__"
     success_message = "Dispocisión final Creada correctamente"
-
+    
     def get_success_url(self):
         return reverse ('leerDispoFinal')
 
@@ -219,7 +219,7 @@ class DispoFinalDelete(PermissionRequiredMixin, SuccessMessageMixin, DeleteView)
     model = DispoFinal
     form = DispoFinal
     fields = "__all__"
-
+    
 
     def get_success_url(self):
         success_message = "Dispocisión final Eliminada correctamente"
@@ -237,7 +237,7 @@ class RecompensasUsuarioCreate(SuccessMessageMixin, CreateView):
     model = Premio_usuario
     form = Premio_usuario
     fields = "__all__"
-
+    
 
     def get_success_url(self):
         ## Faltan validaciones de 0 ##
@@ -261,11 +261,11 @@ class RecompensasUsuarioCreate(SuccessMessageMixin, CreateView):
             success_message = "El usuario no cuenta con los puntos suficientes"
             messages.success (self.request, (success_message))
             return reverse('detallesUsuario', args = [pu.usuario.pk])
-
+    
 
 
 ## BARRA DE BUSQUEDA ##
-
+    
 def buscar_productos(request):
     if request.method == "POST":
         buscar = request.POST['buscar']
@@ -273,7 +273,7 @@ def buscar_productos(request):
         return render(request, 'reciclaje/catalogob.html', {'buscar':buscar, 'producto':producto})
     else:
         return render(request, 'reciclaje/catalogob.html')
-
+    
 
 def ver_productos(requst):
     usere =  requst.user.CURP
@@ -284,7 +284,7 @@ def ver_productos(requst):
             print(1)
             list.append(x)
 
-
+    
 
     #premio_u = Premio_usuario.objects.filter(usuario__contains=usere)
 
@@ -324,7 +324,7 @@ class EntregaDispo(SuccessMessageMixin, CreateView):
     form = Entradas
     fields= [ "Curp", "DF", "Cantidad"]
     #success_message = 'Puntos agregados correctamente'
-
+    
     def get_success_url(self):
         entradas =  Entradas.objects.all()
         userr = self.request.user.pk
@@ -334,13 +334,13 @@ class EntregaDispo(SuccessMessageMixin, CreateView):
         ##try catch para validad que sea trabajador
         try:
             trabajador = Trabajador.objects.get(trbajador=userr)
-
+            
         except:
             print("Ocurrio un error, el trabajador no esta registrado")
         else:
             longitud = len(entradas)
             ent = entradas[longitud - 1]
-            punto = ent.DF.puntoskg * ent.Cantidad
+            punto = ent.DF.puntoskg * ent.Cantidad 
             ent.puntos = punto
             ent.trabajador = nombre_completo
             ent.Curp.puntos = ent.Curp.puntos + punto
@@ -348,15 +348,15 @@ class EntregaDispo(SuccessMessageMixin, CreateView):
             ent.Curp.save()
             ent.save()
             success_message = 'Este usuario no esta registrado como trabajdor'
-            messages.success (self.request, (success_message))
+            messages.success (self.request, (success_message))    
             return reverse('detallesUsuario', args = [ent.Curp.pk])
         success_message = 'Este usuario no esta registrado como trabajdor'
-        messages.success (self.request, (success_message))
+        messages.success (self.request, (success_message))    
         return reverse('DispoEngtrega')
 
 
 
-     ##CRUD de Puntos de Reciclaje
+     ##CRUD de Puntos de Reciclaje     
 
 class PuntosReciclajelist(ListView):
     model = PuntosReciclaje
@@ -367,7 +367,7 @@ class PuntosReciclajelist(ListView):
         queryset = self.request.GET.get("buscar")
         if queryset:
             resultado = PuntosReciclaje.objects.filter(
-                Q(nombre__icontains = queryset)
+                Q(nombre__icontains = queryset) 
             ).distinct()
             context['object_list'] = resultado
         return context
@@ -380,7 +380,7 @@ class PuntosReciclajeCreate(SuccessMessageMixin, CreateView):
     form = PuntosReciclaje
     fields = "__all__"
     success_message = "Punto de reciclaje creado correctamente"
-
+    
     def get_success_url(self):
         return reverse ('leerPuntosReciclaje')
 
@@ -414,3 +414,17 @@ class TrabajadorActualizar(PermissionRequiredMixin, SuccessMessageMixin, UpdateV
 
     def get_success_url(self):
         return reverse ('leerUsuarios')
+    
+
+class DescuentosActualizar(PermissionError, SuccessMessageMixin, UpdateView):
+    permission_required = 'reciclaje.admin'
+    model = Descuentos
+    form = Descuentos
+    fields = ['descuentos']
+    success_message = "Descuento registrado correctamente"
+
+    def get_success_url(self):
+        return reverse ('leerUsuarios')
+    
+
+

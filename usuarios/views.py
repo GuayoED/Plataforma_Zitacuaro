@@ -1,13 +1,12 @@
 from tokenize import group
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.contenttypes.models import ContentType
+from reciclaje.models import User
 from django.contrib import messages
 #from django.contrib.auth.forms import UserCreationForm
 from .forms import CustomUserCreationForm, CustomEscuelaCreationForm
 from django.contrib.auth.models import Group, Permission
-
-
-#Se encarga de el acceso de inicio de sesion
 
 def login_user(request):
     if request.method == "POST":
@@ -84,13 +83,15 @@ def register_user(request):
                     Group.objects.get_or_create(name = 'Habitantes')
                     group = Group.objects.get(name='Habitantes')
                     user.groups.add(group)
+                    content_type = ContentType.objects.get_for_model(User)
                     Group.objects.get_or_create(name = 'Recolector')
                     group_r = Group.objects.get(name='Recolector')
-                    recolector = Permission.objects.get('recolector')
+                    recolector = Permission.objects.get(codename= 'recolector',  content_type= content_type)
                     group_r.permissions.add(recolector)
                     Group.objects.get_or_create(name = 'Canjeador')
                     group_c = Group.objects.get(name='Canjeador')
                     canjeador = Permission.objects.get('canjeador')
+                    canjeador = Permission.objects.get(codename= 'canjeador',  content_type= content_type)
                     group_c.permissions.add(canjeador)
                     login(request, user)
                     messages.success(request, ("Registro Exitoso!"))
@@ -104,6 +105,9 @@ def register_user(request):
                          return redirect('homee')
                     else:
                          Group.objects.get_or_create(name = 'Habitantes')
+                         login(request, user)
+                         messages.success(request, ("Registro Exitoso!"))
+                         return redirect('homee')
 
      else:
           form = CustomUserCreationForm()

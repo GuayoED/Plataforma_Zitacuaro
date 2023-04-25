@@ -6,8 +6,6 @@ from django.contrib.auth.models import AbstractUser
 from PIL import Image
 
 
-# Diferentes tablas con sus campos en la BD
-
 class PuntosReciclaje(models.Model):
      nombre = models.CharField(primary_key=True, max_length = 40, default="")
      direccion = models.CharField( max_length = 40, default="")
@@ -16,6 +14,8 @@ class PuntosReciclaje(models.Model):
 
 
 class User(AbstractUser):
+
+    username = None
 
     Normal = 'Normal'
     ter_edad = 'Tercera Edad'
@@ -26,31 +26,27 @@ class User(AbstractUser):
         (ter_edad, 'Tercera Edad'),
         (Embarazadas, 'Embarazadas')
     ]
-    username = None
+
+    
     CURP = models.CharField(unique=True,  max_length = 18)
     fechaNacimiento = models.DateField(null = True, blank = True)
     puntos = models.IntegerField(blank = True, null = True, default=0)
     pic = models.ImageField(default='unknown.jpg')
     tipo = models.CharField(choices=Tipos, default=Normal, max_length=12)
-    #lugar = models.ForeignKey(PuntosReciclaje, on_delete=models.PROTECT, default='Sin lugar')
     
-
+    REQUIRED_FIELDS = []
     USERNAME_FIELD = 'CURP'
 
-    REQUIRED_FIELDS = []
 
-    # def save(self, *args, **kwargs):
-    #     super().save()
-
-    #     img = Image.open(self.pic.path)
-
-    #     if img.height > 100 or img.width > 100:
-    #         new_img = (100,100)
-    #         img.thumbnail(new_img)
-    #         img.save(self.pic.path)
 
     class Meta:
         permissions = (("admin", "Funciones admin"),("recolector", "Funciones recolector"),("canjeador", "Funciones canjeador"))
+
+
+    
+
+
+
 
 
 class Premio(models.Model):
