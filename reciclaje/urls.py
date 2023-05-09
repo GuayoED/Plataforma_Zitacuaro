@@ -49,4 +49,5 @@ urlpatterns = [
 
     
     path('trabajador/<str:pk>', TrabajadorActualizar.as_view(template_name = "reciclaje/trabajador.html"), name='trabajador'),
+    path('search/', search_user, name="search")
 ]

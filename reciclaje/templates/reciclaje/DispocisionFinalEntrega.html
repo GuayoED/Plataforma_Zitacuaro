@@ -10,23 +10,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Document</title>
+
 </head>
 <body>
-    <main class="container p-2 bg-light border" style="">
+    <div class="row">
+    <div class="container border bg-light col-lg-8 col-sm-12" style="margin-top: 1rem; margin-bottom: 3rem;">
         <h1 class="text-center my-4">
             Registro de Dispocision Final
         </h1>
-        <form action="" method="post" enctypse="multipart/form-data" class="d-flex flex-wrap px-3">
+        <form action="" method="post" enctypse="multipart/form-data" class="d-flex flex-wrap px-3"> 
         {% csrf_token %}
         
             <div class="form-group mr-3 my-3" >
                 <label for="Nombre" class="txt_negrita">
                     Usuario
                 </label>
-                <i class="bi bi-person"></i>
+                <i class="bi bi-person"></i> 
                 {{ form.Curp|add_class:"form-control"|attr:"style:background-color: #D9D9D9;  width: 325px;" }}
-            </div>
+                <!-- <input type="text" name="q" id="search-input" data-url="{% url 'search' %}" placeholder="Buscar..." class="form-control"> -->
+
+                            </div>
             <div class="form-group mr-3 my-3" >
                 <label for="Valor" class="txt_negrita">
                     Dispocision Final       
@@ -41,12 +46,18 @@
                 <i class="bi bi-gift"></i>
                 {{ form.Cantidad|add_class:"form-control"|attr:"style:background-color: #D9D9D9;  width: 325px;" | attr:"min= 1" }}
             </div>
+
+            
            
             <div class="my-4">
+                
                 <button type="submit" class="btn btn-primary mr-2">Registrar</button>
-                <a href="./" type="submit" class="btn btn-danger mr-2">Cancelar</a>
+                <a href="{% url 'homee' %}" type="submit" class="btn btn-danger mr-2">Cancelar</a>
             </div>
      </form>
+     <!-- <input type="text" name="q" id="search-input" data-url="{% url 'search' %}" placeholder="Buscar..." class="form-control"> -->
+     <!--<div id="search-results"></div>-->
+
      {% if messages %}
 <ul class="messages list-group mb-3">
   {% for message in messages %}
@@ -54,8 +65,49 @@
   {% endfor %}
 </ul>
 {% endif %}
-    </main>
-    {% bootstrap_javascript jquery='full' %}     
+    </div>
+    <div class="container bg-light border col-lg-3 col-sm-12" style="margin-top: 1rem; margin-bottom: 3rem;">
+        <h3 class="text-center my-4">
+            Resultados
+        </h3>
+        <div id="search-results" class="text-center" style="font-size: 1rem;"></div>
+    </div>
+
+
+</div>
+    {% bootstrap_javascript jquery='full' %}    
+        
+    
+<script>
+    $(document).ready(function() {
+        $('#search-input').on('input', function() {
+            var url = $(this).data('url');
+            var query = $(this).val();
+            if (query.length > 0){
+                $.ajax({
+                url: url,
+                data: {'q': query},
+                success : function(data) {
+                    var results = data['results'];
+                    var html = '';
+                    for (var i = 0; i <results.length; i++) {
+                        var result = results[i];
+                        html += '<div>' + result['CURP'] + '</div>';
+                       
+                    }
+                    $('#search-results').html(html);
+                }
+            })
+            }else{
+                console.log("")
+            }
+            
+        }); 
+    });
+
+
+</script>
+
 </body>
 {%endblock%}
 </html>

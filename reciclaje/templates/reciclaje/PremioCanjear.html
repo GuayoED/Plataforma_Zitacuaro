@@ -13,7 +13,11 @@
     <title>Document</title>
 </head>
 <body>
-    <main class="container p-2 bg-light border" style="">
+    
+   
+        <div class="row">
+            <div class="container border bg-light col-lg-8 col-sm-12" style="margin-top: 1rem; margin-bottom: 3rem;">    
+
         <h1 class="text-center my-4">
             Registro de Recompensas
         </h1>
@@ -38,8 +42,49 @@
                 <a href="./" type="submit" class="btn btn-danger mr-2">Cancelar</a>
             </div>
      </form>
-    </main>
-    {% bootstrap_javascript jquery='full' %}     
+    </div>
+
+     <div class="container bg-light border col-lg-3 col-sm-12" style="margin-top: 1rem; margin-bottom: 3rem;">
+        <h3 class="text-center my-4">
+            Resultados
+        </h3>
+        <div id="search-results" class="text-center" style="font-size: 1rem;"></div>
+    </div>
+</div>
+    
+    {% bootstrap_javascript jquery='full' %} 
+    
+    <script>
+        $(document).ready(function() {
+            $('#search-input').on('input', function() {
+                var url = $(this).data('url');
+                var query = $(this).val();
+                if (query.length > 0){
+                    $.ajax({
+                    url: url,
+                    data: {'q': query},
+                    success : function(data) {
+                        var results = data['results'];
+                        var html = '';
+                        for (var i = 0; i <results.length; i++) {
+                            var result = results[i];
+                            html += '<div>' + result['CURP'] + '</div>';
+                           
+                        }
+                        $('#search-results').html(html);
+                    }
+                })
+                }else{
+                    console.log("")
+                }
+                
+            }); 
+        });
+    
+    
+    </script>
+
+
 </body>
 {% endblock  %}
 </html>

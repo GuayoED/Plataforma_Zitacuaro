@@ -16,9 +16,22 @@ def login_user(request):
        if user is not None:
             login(request, user)
             return redirect('homee')
-       else:
-            messages.success(request, ("Ocurrio un error al iniciar sesion, intenta de nuevo... "))
+       elif curp is '' and password is '':
+            messages.success(request, ("CURP y Contraseña no valida"))
             return redirect('login')
+       elif curp is '':
+            messages.success(request, ("CURP no valida"))
+            return redirect('login')
+       elif password is '':
+            messages.success(request, ("Contraseña no valida"))
+            return redirect('login')
+       else:
+            messages.success(request, ("Credenciales incorrectas"))
+            return redirect('login')
+            
+       
+
+       
     
     else:
         return render(request, 'authenticate/login.html', {})
@@ -33,7 +46,6 @@ def logout_user(request):
 def register_escuela(request):
      if request.method == "POST":
           form = CustomEscuelaCreationForm(request.POST)
-          print("aqui")
           if form.is_valid():
                form.save()
                clave = form.cleaned_data['CURP']

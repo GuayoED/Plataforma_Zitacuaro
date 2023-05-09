@@ -14,8 +14,6 @@ class ReporteView(TemplateView):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
-        print(self.request.user.first_name)
-        print(self.request.user.last_name)
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):

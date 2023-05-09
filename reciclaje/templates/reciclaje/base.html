@@ -94,7 +94,7 @@
                       <li><a class="dropdown-item" href="{% url 'leerPuntosReciclaje' %}"><i class="bi bi-shop"></i></i> Puntos de Reciclaje</a></li>
                       {% endif %}
                       
-                      {% if perms.reciclaje.canjeador %}
+                      {% if perms.reciclaje.admin  %}
                       <li><a class="dropdown-item" href="{% url 'leerPremios' %}"><i class="bi bi-gift"></i> Recompensas</a></li>
                       {% endif %}
                       
@@ -183,9 +183,9 @@
         </div>
     
         <ul class="nav col-6 justify-content-end align-items-center list-unstyled d-flex">
-          <a class="nav-link" href="#" style="color: white;"><i class="bi bi-instagram"></i></a>
-          <a class="nav-link" href="#" style="color: white;"><i class="bi bi-facebook"></i></a>
-          <a class="nav-link" href="#" style="color: white;"><i class="bi bi-youtube"></i></a>
+          <a class="nav-link" href="https://www.instagram.com/zitacuaro_ayuntamiento/" style="color: white;"><i class="bi bi-instagram"></i></a>
+          <a class="nav-link" href="https://www.facebook.com/ayuntamientozitacuaro/" style="color: white;"><i class="bi bi-facebook"></i></a>
+          <a class="nav-link" href="https://www.youtube.com/channel/UC2m9bHbE2dXqnagMYmEag3A  " style="color: white;"><i class="bi bi-youtube"></i></a>
         </ul>
       
       </footer>

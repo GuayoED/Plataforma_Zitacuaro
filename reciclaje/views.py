@@ -1,9 +1,10 @@
+from typing import Any, Dict
 from django.shortcuts import render, redirect
 #Instanciamos las vistas generiaca de Django
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView , DeleteView
 #Instanciamos los modelos
-from .models import User , Premio, DispoFinal, Premio_usuario, PuntosReciclaje, Entradas, Trabajador, Descuentos
+from .models import User , Premio, DispoFinal, Premio_usuario, PuntosReciclaje, Entradas, Trabajador, Descuentos 
 
 #Sirve para hacer un reverse
 from django.urls import reverse, reverse_lazy
@@ -16,10 +17,11 @@ from django.contrib.auth.views import PasswordChangeView
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 #Para usar formularios
-from .forms import UpdateUserForm
+from .forms import UpdateUserForm, EntradasForm, RecompensasForm
 #Se importa los grupos
 from django.contrib.auth.models import Group
 from django.db.models import Q
+from django.http import JsonResponse
 
 
 def home(request):
@@ -235,8 +237,9 @@ class Equivalencia(ListView):
 
 class RecompensasUsuarioCreate(SuccessMessageMixin, CreateView):
     model = Premio_usuario
-    form = Premio_usuario
-    fields = "__all__"
+    form_class = RecompensasForm
+    #form = Premio_usuario
+    #fields = "__all__"
     
 
     def get_success_url(self):
@@ -261,6 +264,14 @@ class RecompensasUsuarioCreate(SuccessMessageMixin, CreateView):
             success_message = "El usuario no cuenta con los puntos suficientes"
             messages.success (self.request, (success_message))
             return reverse('detallesUsuario', args = [pu.usuario.pk])
+        
+    def post(self, request, *args, **kwarg):
+        _mutaable = self.request.POST._mutable
+        self.request.POST._mutable = True
+        usu = self.request.POST['usuario']
+        result = User.objects.get(CURP=usu)
+        self.request.POST['usuario'] = result.pk
+        return super().post(request, *args, **kwarg)
     
 
 
@@ -281,7 +292,6 @@ def ver_productos(requst):
     list=[]
     for x in premio:
         if str(x.usuario) == usere:
-            print(1)
             list.append(x)
 
     
@@ -300,7 +310,6 @@ def mi_perfil(request):
 @login_required
 def perfil(request):
     if request.method == "POST":
-        print('done')
         user_form = UpdateUserForm(request.POST,request.FILES ,instance=request.user)
         if user_form.is_valid():
             user_form.save()
@@ -321,8 +330,9 @@ class CambiarContraView(SuccessMessageMixin, PasswordChangeView):
 ##Entrega de dispocision final
 class EntregaDispo(SuccessMessageMixin, CreateView):
     model = Entradas
-    form = Entradas
-    fields= [ "Curp", "DF", "Cantidad"]
+    form_class = EntradasForm
+    #form = Entradas
+    #fields= [ "Curp", "DF", "Cantidad"]
     #success_message = 'Puntos agregados correctamente'
     
     def get_success_url(self):
@@ -334,9 +344,13 @@ class EntregaDispo(SuccessMessageMixin, CreateView):
         ##try catch para validad que sea trabajador
         try:
             trabajador = Trabajador.objects.get(trbajador=userr)
-            
         except:
-            print("Ocurrio un error, el trabajador no esta registrado")
+            longitud = len(entradas)
+            ent = entradas[longitud - 1]
+            ent.delete()
+            success_message = 'Ocurrio un error, este trabajador no esta registrado'
+            messages.success (self.request, (success_message))    
+            return reverse('DispoEngtrega')
         else:
             longitud = len(entradas)
             ent = entradas[longitud - 1]
@@ -347,12 +361,29 @@ class EntregaDispo(SuccessMessageMixin, CreateView):
             ent.lugar = str(trabajador.lugar)
             ent.Curp.save()
             ent.save()
-            success_message = 'Este usuario no esta registrado como trabajdor'
+            success_message = 'Registro exitoso'
             messages.success (self.request, (success_message))    
             return reverse('detallesUsuario', args = [ent.Curp.pk])
-        success_message = 'Este usuario no esta registrado como trabajdor'
-        messages.success (self.request, (success_message))    
-        return reverse('DispoEngtrega')
+         
+    
+    def post(self, request, *args, **kwarg):
+        _mutaable = self.request.POST._mutable
+        self.request.POST._mutable = True
+        curp = self.request.POST['Curp']
+        result = User.objects.get(CURP=curp)
+        self.request.POST['Curp'] = result.pk
+        return super().post(request, *args, **kwarg)
+        
+        
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     return context
+
+def search_user(request):
+    query = request.GET.get("q",)
+    results = User.objects.filter(CURP__icontains=query)
+    data = {'results': list(results.values())}
+    return JsonResponse(data)
 
 
 
