@@ -9,7 +9,7 @@
 
 {% if form.errors %}
 
-{% if form.errors %}
+<!-- {% if form.errors %}
 <div class="conteiner">
         <div class="alert alert-warning pt-4" role="alert" style="margin-top: 24px;">
           {% for field in form %}
@@ -18,7 +18,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
  </div>
- {% endif %}
+ {% endif %} -->
 
 
 
@@ -121,20 +121,20 @@
   
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form2Example17" style="font-size: 1.2rem;">Clave Escolar</label>
-                        {{form.CURP|attr:"id=CURP"}}
+                        {{form.CURP|attr:"id=CURP"|attr:"required"}}
                         <span class="text-error">{{ form.CURP.errors }}</span>
                     </div>
   
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form2Example17" style="font-size: 1.2rem;">Nombre de la escuela</label>
-                        {{form.first_name|attr:"id=first_name"}}
+                        {{form.first_name|attr:"id=first_name"|attr:"required"}}
                     </div>
 
                   
 
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form2Example17" style="font-size: 1.2rem;">Correo Electronico</label>
-                        {{form.email|attr:"id=email"}}
+                        {{form.email|attr:"id=email"|attr:"required"}}
                         <span class="text-error">{{ form.email.errors }}</span>
                     </div>
 
@@ -144,13 +144,13 @@
 
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form2Example27" style="font-size: 1.2rem;">Contrseña</label>
-                        {{form.password1|attr:"id=password"}}
+                        {{form.password1|attr:"id=password"|attr:"required"}}
                         <span class="text-error">{{ form.password1.errors }}</span>
                     </div>
   
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form2Example27" style="font-size: 1.2rem;">Repita su Contrseña</label>
-                        {{form.password2}}
+                        {{form.password2|attr:"required"}}
                         <span class="text-error">{{ form.password2.errors }}</span>
                     </div>
                       
