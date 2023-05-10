@@ -27,6 +27,12 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['password1'].widget.attrs['class'] = 'form-control form-control-lg'
         self.fields['password2'].widget.attrs['class'] = 'form-control form-control-lg'
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError(u'El email ya esta registrado prueba con otro')
+        return email
+
 
 
 class CustomEscuelaCreationForm(UserCreationForm):
